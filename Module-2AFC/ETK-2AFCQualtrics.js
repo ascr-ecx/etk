@@ -23,42 +23,69 @@ to fit the specific variable names defined by the user.
 
 // List of Test images.  Baseline is first image by default.
 // Baseline will be compared to itself and each of the Test images.
-var imgs = [
-"http://000.0.00.00/TestImages/Image00.png",
-"http://000.0.00.00/TestImages/Image01.png",
-"http://000.0.00.00/TestImages/Image02.png",
-"http://000.0.00.00/TestImages/Image03.png",
-"http://000.0.00.00/TestImages/Image04.png"
+var imgURL = "http://000.0.00.00/TestImages/"
+var baseNames = [ 
+"Image00",
+"Image01",
+"Image02",
+"Image03",
+"Image04"
 ];
-
+var imgs = [];
 var imgNames = [];
 	
-var container = document.getElementById('imageContainer');
-var quesText = document.getElementById('myQuesText');
+// Create containers, attach global container to Qualtrics Question Container
+var imgContainer = document.getElementById('imageContainer');
+var glbContainer =  this.getQuestionContainer();
+var quesText = document.getElementById('myQuesText')
+imgContainer.className = "pairBox";
+
+// Create buttons with needed attributes and text
 var leftBtn = document.createElement("BUTTON");
-var leftText = document.createTextNode("LEFT");
-leftBtn.appendChild(leftText);
 var rightBtn = document.createElement("BUTTON");
-var rightText = document.createTextNode("RIGHT");
-rightBtn.appendChild(rightText);
 var nextBtn = document.createElement("BUTTON");
 var nextText = document.createTextNode("NEXT Image Pair");
-nextBtn.appendChild(nextText);
+var leftText = document.createTextNode("LEFT");
+var rightText = document.createTextNode("RIGHT");
 
+nextBtn.className = "nextButton";
 leftBtn.className = "choiceButton leftButton";
 rightBtn.className = "choiceButton rightButton";
-nextBtn.className = "nextButton";
+leftBtn.setAttribute = ("type", "radio");
+rightBtn.setAttribute = ("type", "radio");
+nextBtn.appendChild(nextText);
+leftBtn.appendChild(leftText);
+rightBtn.appendChild(rightText);
 
 var imgPairs = [];
 var imgPairsIndex = 0;  
 var imgPairNames = [];
 var didflip = false;
+var currentIndex = 0;
 var that;
+
+// Create variables for write-out to Qualtrics Embedded Data 
 var choicePre = "c";
 var choiceEmbData;
 var namePre = "n";
 var nameEmbData;
-var currentIndex = 0;
+var currentName = " ";
+var currentChoice;
+
+// Create variables to check if participant only selects one button 
+var allLeft = true;
+var allRight = true;
+var nameAllOneSide = "AllOneSide";
+
+function preloadImages(arr){ // preload imaegs
+    var newimages=[]
+	//force arr parameter to always be an array
+    for (var i=0; i<arr.length; i++){
+    var arr=(typeof arr!="object")? [arr] : arr 
+        newimages[i]=new Image()
+        newimages[i].src=arr[i]
+    }
+}
 
 function shuffle(array) {  // Fisher-Yates Shuffle from stackoverflow
     var arrIndex = array.length, temporaryValue, randomIndex;
@@ -77,7 +104,9 @@ function shuffle(array) {  // Fisher-Yates Shuffle from stackoverflow
   return array;
 }
 
-function show2Images(container, imgA, imgB) { 
+function show2Images(outContainer, inContainer, imgA, imgB) { 
+// Add two images to the study container; randomly show the images
+// as A vs. B or B vs. A
 	var img;
 	var docFrag = document.createDocumentFragment();
 	var someSpace = document.createTextNode("  ");
@@ -95,13 +124,14 @@ function show2Images(container, imgA, imgB) {
 		docFrag.appendChild(someSpace);
 	    docFrag.appendChild(img=document.createElement('img')).src = imgA;
 	}
-	container.appendChild(docFrag);
-	container.appendChild(document.createElement('br'));
-	container.appendChild(leftBtn);
-	container.appendChild(rightBtn);
-	container.appendChild(document.createElement('br'));
-	container.appendChild(document.createElement('br'));
-	container.appendChild(nextBtn);
+	inContainer.appendChild(docFrag);
+	inContainer.appendChild(document.createElement('br'));
+	inContainer.appendChild(leftBtn);
+	inContainer.appendChild(rightBtn);
+	inContainer.appendChild(document.createElement('br'));
+	inContainer.appendChild(nextBtn);
+	
+	outContainer.appendChild(inContainer);
 	return flipped;
 }
 
@@ -115,16 +145,16 @@ function clearContainer(elementID) {
 		elementID.removeChild(elementID.firstChild)}
 }
 
-function endStudy(container) {
+function endStudy(inContainer) {
 	var endTextTitle = document.createTextNode("Please click on SUBMIT to record your choices.");
 	var docFrag = document.createDocumentFragment();
 	
 	quesText.style.display = "none";
-	container.style.backgroundColor = "#CC5500";
-	container.style.fontSize="200%";
-	container.style.fontWeight="bold" ;
+	inContainer.style.backgroundColor = "#CC5500";
+	inContainer.style.fontSize="200%";
+	inContainer.style.fontWeight="bold" ;
 	docFrag.appendChild(endTextTitle); 
-	container.appendChild(docFrag);
+	inContainer.appendChild(docFrag);
 	that.showNextButton();
 }
 
@@ -138,17 +168,19 @@ function findOrigIndex (arr, key, iSearchValue) {
 }
 
 // Start 2 Alternative Forced Choice
+
 that = this;
 that.hideNextButton();
-clearContainer(container);
 
-// Need to extract image name; this will need to be 
-// modified as appropriate for the specific image path/name. 
-for (i=0; i<imgs.length; i++) {
-	nameLen = imgs[i].length;
-	tempName = imgs[i].slice(30,nameLen);
-	imgNames.push( {iIndex: i, iName: tempName, iResult: -1} );
+// Build the image arrays from the URL and names; preload images
+// Create an array of indices, shuffle that and 
+// always compare the two images with same index.
+for (i=0; i<baseNames.length; i++) {
+	imgs[i] = imgURL + baseNames[i];
+	imgNames.push( {iIndex: i, iName: baseNames[i], iResult: -1} );
 }
+preloadImages(imgs);
+clearContainer(imgContainer);
 
 // Use an array of objects to determine which image pairs are to be shown.
 // Base image must be imgs[0].  Shuffle the image pairs.
@@ -159,12 +191,12 @@ shuffle(imgPairs);
 
 // Showing initial image pair
 nextBtn.disabled = true;
-didflip = show2Images(document.getElementById('imageContainer'), imgs[imgPairs[0].iA], imgs[imgPairs[0].iB]);
+didflip = show2Images(glbContainer, imgContainer, imgs[imgPairs[0].iA], imgs[imgPairs[0].iB]);
 	
 // Click "Next" button to see next image pair
 nextBtn.addEventListener('click', function() {
 
-	clearContainer(container);
+	clearContainer(imgContainer);
 	leftBtn.style.backgroundColor = "burlywood";
 	rightBtn.style.backgroundColor = "burlywood";	
 	nextBtn.style.backgroundColor = "burlywood";
@@ -172,9 +204,10 @@ nextBtn.addEventListener('click', function() {
 	imgPairsIndex++;
 	currentIndex = imgPairsIndex;
 	if (imgPairsIndex < imgPairs.length) {
-		didflip = show2Images(container, imgs[imgPairs[imgPairsIndex].iA], imgs[imgPairs[imgPairsIndex].iB]);
+		didflip = show2Images(glbContainer, imgContainer, imgs[imgPairs[imgPairsIndex].iA], imgs[imgPairs[imgPairsIndex].iB]);
 	} else {
-		endStudy(container);
+		endStudy(imgContainer);
+		Qualtrics.SurveyEngine.setEmbeddedData("AllOneSide", allLeft||allRight);
 // Write output to Embedded Data Variables in image order; 
 		for (var iLoop = 0; iLoop<imgNames.length; iLoop++) {
 			origIndex = findOrigIndex(imgNames, "iIndex", iLoop);
@@ -194,6 +227,7 @@ leftBtn.addEventListener('click', function(){
 	rightBtn.style.backgroundColor = "burlywood";
 	nextBtn.style.backgroundColor = "GreenYellow";
 	nextBtn.disabled = false;
+	allRight = false;
 	if (didflip) {
 		imgNames[currentIndex].iResult = 0;  // non-Baseline chosen
 	} else {
@@ -206,6 +240,7 @@ leftBtn.addEventListener('click', function(){
 	leftBtn.style.backgroundColor = "burlywood";
 	nextBtn.style.backgroundColor = "GreenYellow";
 	nextBtn.disabled = false;
+	allLeft = false;
 	if (didflip) {
 		imgNames[currentIndex].iResult = 1;  // Baseline chosen
 	} else {

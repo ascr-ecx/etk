@@ -24,25 +24,36 @@ question.
 */
 	
 // Edit the image list as needed.
-var imgs = [
-"http://000.0.00.00/TestImages/Image00.png",
-"http://000.0.00.00/TestImages/Image01.png",
-"http://000.0.00.00/TestImages/Image02.png",
-"http://000.0.00.00/TestImages/Image03.png",
-"http://000.0.00.00/TestImages/Image04.png"
+var imgURL = "http://000.0.00.00/TestImages/";
+var baseNames = [ 
+"Image00",
+"Image01",
+"Image02",
+"Image03",
+"Image04"
 ];
+var imgs = [];
 
-var container = document.getElementById('imageContainer');
+// Create containers, attach global container to Qualtrics Question Container
+var imgContainer = document.getElementById('imageContainer');
+var glbContainer =  this.getQuestionContainer();
+var quesText = document.getElementById('myQuesText')
+imgContainer.className = "carouselBox";
+
+// Create buttons with needed attributes and text
 var nextBtn = document.createElement("BUTTON");
 var nextTxt = document.createTextNode("NEXT>");
-nextBtn.appendChild(nextTxt);
 var prevBtn = document.createElement("BUTTON");
 var prevTxt = document.createTextNode("<PREV");
-prevBtn.appendChild(prevTxt);
 
 nextBtn.className = "cycleButton rightButton";
 prevBtn.className = "cycleButton leftButton";
+nextBtn.setAttribute = ("type", "radio");
+prevBtn.setAttribute = ("type", "radio");
+nextBtn.appendChild(nextTxt);
+prevBtn.appendChild(prevTxt);
 
+var choiceName = "Count1";
 var currentImage = 0;
 var imgIndex = 0; 
 
@@ -56,7 +67,7 @@ function preloadImages(arr){
     }
 }
 
-function show1Image(container, image, imageNum) { 
+function show1Image(outContainer, inContainer, image, imageNum) { 
 	var img;
 	var docFrag = document.createDocumentFragment();
 
@@ -68,45 +79,54 @@ of the carousel box.  Uncomment it if you wish to have the image number availabl
 //	var text = document.createTextNode(imageTextTitle + imageNum);
 //	titleDiv.className = "imageTitle";
 //	titleDiv.appendChild(text);
-//	container.appendChild(titleDiv); 
+//	inContainer.appendChild(titleDiv); 
 
 	docFrag.appendChild(img=document.createElement('img')).src = image;
-	container.appendChild(docFrag);
-	container.appendChild(document.createElement('br'));
-	container.appendChild(prevBtn);
-	container.appendChild(nextBtn);
+	inContainer.appendChild(docFrag);
+	inContainer.appendChild(document.createElement('br'));
+	inContainer.appendChild(prevBtn);
+	inContainer.appendChild(nextBtn);
+	
+	outContainer.appendChild(inContainer);
 }
 
 function clearContainer(elementID) {
     while (elementID.firstChild) {
 		elementID.removeChild(elementID.firstChild)}
 }
+
+// Begin Method of Adjustment 
+
+// Create image array from URL and list of image names; 
 // Preload images to avoid flickering onload
+for (i=0; i<baseNames.length; i++) {
+	imgs[i] = imgURL + baseNames[i];
+}
 preloadImages(imgs);
 
 // Showing initial image 
-show1Image(document.getElementById('imageContainer'), imgs[0], 0 );
+show1Image(glbContainer, imgContainer, imgs[0], 0 );
 
 // Click "Next" button to see next image
 nextBtn.addEventListener('click', function() {
-	clearContainer(container);
+	clearContainer(imgContainer);
 	imgIndex++;
 	if (imgIndex == imgs.length) {
 	imgIndex = 0;
 	}
-	show1Image(container, imgs[imgIndex], imgIndex);
-	Qualtrics.SurveyEngine.setEmbeddedData("Count1",imgIndex);
+	show1Image(glbContainer, imgContainer, imgs[imgIndex], imgIndex);
+	Qualtrics.SurveyEngine.setEmbeddedData(choiceName,imgIndex);
 });
 
 // Click "Prev" button to see previous image
 prevBtn.addEventListener('click', function() {
-	clearContainer(container);
+	clearContainer(imgContainer);
 	imgIndex--;
 	if (imgIndex == -1) {
 	imgIndex = imgs.length - 1;
 	} 
-	show1Image(container, imgs[imgIndex], imgIndex);
-	Qualtrics.SurveyEngine.setEmbeddedData("Count1",imgIndex);
+	show1Image(glbContainer, imgContainer, imgs[imgIndex], imgIndex);
+	Qualtrics.SurveyEngine.setEmbeddedData(choiceName,imgIndex);
 });
 
 /*

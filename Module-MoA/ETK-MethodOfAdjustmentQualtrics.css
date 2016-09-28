@@ -16,10 +16,10 @@ the carouselbox width and the leftButton margin-left,
 along with the various colors, may need to be changed 
 to fit your study needs.
  */
-  .carouselbox {
+  .carouselBox {
      margin-left: auto;
       margin-right: auto;
-      width: 400px;
+      width: 400px;		/* Modify to be equal to image width */
       position: relative;
       margin: 1em;
       border: 1px solid #ccc;
