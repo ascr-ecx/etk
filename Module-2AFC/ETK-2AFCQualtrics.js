@@ -13,9 +13,11 @@ experiment against a single baseline image.  The baseline image must be
 the first in the list of Test images.  The baseline image will be shuffled 
 into the list of Test images so there will be a bseline vs. baseline comparison.
 
-The image arrays will need to be modified for the user specific images.
-The code snippets which extract the image names will also need to be 
-modified.  
+The image arrays will need to be modified for the user specific images.  There
+are two arrays, one for the stimuli images and one for multiple baselines images.
+The stimuli image order will be randomized and each paired with a randomly chosen
+baseline image.  
+
 The prefixes and code for the Embedded Data can also be changed as needed 
 to fit the specific variable names defined by the user.  
 */
@@ -23,16 +25,24 @@ to fit the specific variable names defined by the user.
 
 // List of Test images.  Baseline is first image by default.
 // Baseline will be compared to itself and each of the Test images.
-var imgURL = "http://000.0.00.00/TestImages/"
-var baseNames = [ 
-"Image00",
-"Image01",
-"Image02",
-"Image03",
-"Image04"
+var imgURL = "http://146.6.82.10/TestImages/";
+var baselineNames = [ 
+"True00.png",
+"True01.png",
+"True02.png",
+"True03.png"
 ];
-var imgs = [];
-var imgNames = [];
+var stmliNames = [
+"Image00.png",
+"Image01.png",
+"Image02.png",
+"Image03.png",
+"Image04.png"
+];
+
+var bases = [], baseNames = [];
+var imgs = [], imgNames = [];
+var whichBase;
 	
 // Create containers, attach global container to Qualtrics Question Container
 var imgContainer = document.getElementById('imageContainer');
@@ -41,16 +51,19 @@ var quesText = document.getElementById('myQuesText')
 imgContainer.className = "pairBox";
 
 // Create buttons with needed attributes and text
+// blankBtn is used to add space between left/right buttons
 var leftBtn = document.createElement("BUTTON");
 var rightBtn = document.createElement("BUTTON");
 var nextBtn = document.createElement("BUTTON");
 var nextText = document.createTextNode("NEXT Image Pair");
 var leftText = document.createTextNode("LEFT");
 var rightText = document.createTextNode("RIGHT");
+var blankBtn = document.createElement("BUTTON");
 
 nextBtn.className = "nextButton";
 leftBtn.className = "choiceButton leftButton";
 rightBtn.className = "choiceButton rightButton";
+blankBtn.className = "blankButton";
 leftBtn.setAttribute = ("type", "radio");
 rightBtn.setAttribute = ("type", "radio");
 nextBtn.appendChild(nextText);
@@ -109,9 +122,10 @@ function show2Images(outContainer, inContainer, imgA, imgB) {
 // as A vs. B or B vs. A
 	var img;
 	var docFrag = document.createDocumentFragment();
-	var someSpace = document.createTextNode("  ");
+	var someSpace = document.createTextNode("xxxxx");
 	flipped = false;
 
+	inContainer.style.color = "#CCCCCC";
 	if (Math.random() < 0.5) {
 		docFrag.appendChild(someSpace);
 		docFrag.appendChild(img=document.createElement('img')).src = imgA;
@@ -127,17 +141,13 @@ function show2Images(outContainer, inContainer, imgA, imgB) {
 	inContainer.appendChild(docFrag);
 	inContainer.appendChild(document.createElement('br'));
 	inContainer.appendChild(leftBtn);
+	inContainer.appendChild(blankBtn);
 	inContainer.appendChild(rightBtn);
 	inContainer.appendChild(document.createElement('br'));
 	inContainer.appendChild(nextBtn);
 	
 	outContainer.appendChild(inContainer);
 	return flipped;
-}
-
-function createImagePairing (firstImageNum, secondImageNum) {
-	imgPairs.push ({iA: firstImageNum, iB: secondImageNum, 
-	                 iAname: imgNames[firstImageNum], iBname: imgNames[secondImageNum]});
 }
 
 function clearContainer(elementID) {
@@ -150,6 +160,7 @@ function endStudy(inContainer) {
 	var docFrag = document.createDocumentFragment();
 	
 	quesText.style.display = "none";
+	inContainer.style.color = "Black";
 	inContainer.style.backgroundColor = "#CC5500";
 	inContainer.style.fontSize="200%";
 	inContainer.style.fontWeight="bold" ;
@@ -172,26 +183,33 @@ function findOrigIndex (arr, key, iSearchValue) {
 that = this;
 that.hideNextButton();
 
-// Build the image arrays from the URL and names; preload images
-// Create an array of indices, shuffle that and 
-// always compare the two images with same index.
-for (i=0; i<baseNames.length; i++) {
-	imgs[i] = imgURL + baseNames[i];
-	imgNames.push( {iIndex: i, iName: baseNames[i], iResult: -1} );
+// Build the image and baseline arrays from the URL and names; preload images
+// Shuffle the images, choose a random baseline and compare the baseline to the image
+// creating an array of image pairs.
+for (var i=0; i<stmliNames.length; i++) {
+	imgs[i] = imgURL + stmliNames[i];
+	imgNames.push( {iIndex: i, sName: stmliNames[i], iName: imgs[i], iResult: -1} );
+}
+
+for (var i=0; i<baselineNames.length; i++) {
+	bases[i] = imgURL + baselineNames[i];
+	baseNames.push( {iIndex: i, bName: baselineNames, iName: bases[i], iResult: -1} );
 }
 preloadImages(imgs);
+preloadImages(bases);
 clearContainer(imgContainer);
 
 // Use an array of objects to determine which image pairs are to be shown.
-// Base image must be imgs[0].  Shuffle the image pairs.
-for (j = 0; j<imgs.length; j++) { 
-	createImagePairing (0, j);
+// Shuffle the images. Choose one of the baseline images.  Build pairs.
+shuffle(imgNames);
+for (var j = 0; j<imgNames.length; j++) { 
+	whichBase = Math.floor(bases.length*Math.random());
+	imgPairs[j] =  ({iA: whichBase, iB: j, iAname: baseNames[whichBase].iName, iBname: imgNames[j].iName});
 }
-shuffle(imgPairs);
 
 // Showing initial image pair
 nextBtn.disabled = true;
-didflip = show2Images(glbContainer, imgContainer, imgs[imgPairs[0].iA], imgs[imgPairs[0].iB]);
+didflip = show2Images(glbContainer, imgContainer, imgPairs[0].iAname, imgPairs[0].iBname);
 	
 // Click "Next" button to see next image pair
 nextBtn.addEventListener('click', function() {
@@ -204,17 +222,18 @@ nextBtn.addEventListener('click', function() {
 	imgPairsIndex++;
 	currentIndex = imgPairsIndex;
 	if (imgPairsIndex < imgPairs.length) {
-		didflip = show2Images(glbContainer, imgContainer, imgs[imgPairs[imgPairsIndex].iA], imgs[imgPairs[imgPairsIndex].iB]);
+	didflip = show2Images(glbContainer, imgContainer, imgPairs[imgPairsIndex].iAname, imgPairs[imgPairsIndex].iBname);
 	} else {
 		endStudy(imgContainer);
-		Qualtrics.SurveyEngine.setEmbeddedData("AllOneSide", allLeft||allRight);
 // Write output to Embedded Data Variables in image order; 
-		for (var iLoop = 0; iLoop<imgNames.length; iLoop++) {
+		Qualtrics.SurveyEngine.setEmbeddedData("AllOneSide", allLeft||allRight);
+		for (var iLoop = 0; iLoop<stmliNames.length; iLoop++) {
 			origIndex = findOrigIndex(imgNames, "iIndex", iLoop);
 			choiceEmbData = choicePre + iLoop;
 			nameEmbData = namePre + iLoop;
-			currentName = imgNames[origIndex].iName;
+			currentName = imgNames[origIndex].sName;
 			currentChoice = imgNames[origIndex].iResult;
+			console.log("unpacked:", iLoop, " ", origIndex, " ", currentName, " ", currentChoice);
 	        Qualtrics.SurveyEngine.setEmbeddedData(nameEmbData, currentName);		
 	        Qualtrics.SurveyEngine.setEmbeddedData(choiceEmbData, currentChoice);
 		}
