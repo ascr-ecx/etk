@@ -47,16 +47,19 @@ var quesText = document.getElementById('myQuesText')
 imgContainer.className = "pairBox";
 
 // Create buttons with needed attributes and text
+// blankBtn is used to add space between left/right buttons
 var leftBtn = document.createElement("BUTTON");
 var rightBtn = document.createElement("BUTTON");
 var nextBtn = document.createElement("BUTTON");
 var nextText = document.createTextNode("NEXT Image Pair");
 var leftText = document.createTextNode("LEFT");
 var rightText = document.createTextNode("RIGHT");
+var blankBtn = document.createElement("BUTTON");
 
 nextBtn.className = "nextButton";
 leftBtn.className = "choiceButton leftButton";
 rightBtn.className = "choiceButton rightButton";
+blankBtn.className = "blankButton";
 leftBtn.setAttribute = ("type", "radio");
 rightBtn.setAttribute = ("type", "radio");
 nextBtn.appendChild(nextText);
@@ -110,9 +113,10 @@ function shuffle(array) {  // Fisher-Yates Shuffle from stackoverflow
 function show2Images(outContainer, inContainer, imgA, imgB) {  
 	var img;
 	var docFrag = document.createDocumentFragment();
-	var someSpace = document.createTextNode("  ");
+	var someSpace = document.createTextNode("xxxxx");
 	flipped = false;
 
+	inContainer.style.color = "#CCCCCC";
 	if (Math.random() < 0.5) {
 		docFrag.appendChild(someSpace);
 		docFrag.appendChild(img=document.createElement('img')).src = imgA;
@@ -128,6 +132,7 @@ function show2Images(outContainer, inContainer, imgA, imgB) {
 	inContainer.appendChild(docFrag);
 	inContainer.appendChild(document.createElement('br'));
 	inContainer.appendChild(leftBtn);
+	inContainer.appendChild(blankBtn);
 	inContainer.appendChild(rightBtn);
 	inContainer.appendChild(document.createElement('br'));
 	inContainer.appendChild(nextBtn);
@@ -146,6 +151,7 @@ function endStudy(inContainer) {
 	var docFrag = document.createDocumentFragment();
 	
 	quesText.style.display = "none";	
+	inContainer.style.color = "Black";
 	inContainer.style.backgroundColor = "#CC5500";
 	inContainer.style.fontSize="200%";
 	inContainer.style.fontWeight="bold" ;
@@ -197,7 +203,7 @@ nextBtn.addEventListener('click', function() {
 	clearContainer(imgContainer);
 	leftBtn.style.backgroundColor = "burlywood";
 	rightBtn.style.backgroundColor = "burlywood";	
-	nextBtn.style.backgroundColor = "burlywood";
+	nextBtn.style.backgroundColor = "white";
 	nextBtn.disabled = true;
 	imgPairsIndex++;
 	if (imgPairsIndex < imgPairs.length) {
