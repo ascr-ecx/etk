@@ -20,12 +20,12 @@ to fit your study needs.
  .pairBox {
      margin-left: auto;
       margin-right: auto;
-      width: 825px; 	 /* Modify to be (2*image width + 25pixels) */
+      width: 860px; 	 /* Modify to be (2*image width + 60pixels) */
       position: relative;
       margin: 1em;
-      border: 10px solid #ccc;
+      border: 10px solid #CCCCCC;
       overflow: hidden;
-	  background-color:  #CCC;
+	  background-color:  #CCCCCC;
     }
 	
   .choiceButton {
@@ -34,20 +34,29 @@ to fit your study needs.
 	 text-align: center;
 	 font-weight: bold;
 	 font-size: 120% ;
-	 width: 15%;
+	 width: 40%;
   }	
+
   .leftButton {
-	 margin-left: 34.5%;
+	 margin-left: 5.0%;
   }
+  
   .nextButton {
-    background-color: burlywood;
+    background-color: white;
 	position: center;
 	text-align: center;
 	width: 100%;
 	font-weight: bold;
 	font-size: 120% ;
   }
-  
+   
+  .blankButton {
+	background-color: #CCCCCC;
+	width: 10%;
+	position: center;
+	visibility: hidden;
+  }
+
 /*
 Copyright (c) 2016, University of Texas at Austin, Los Alamos National Laboratory.
 All rights reserved.
