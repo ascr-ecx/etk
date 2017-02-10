@@ -1,0 +1,63 @@
+/*
+This code is licensed under a BSD 3-Clause License.
+Copyright (c) 2017, University of Texas at Austin, Los Alamos National Laboratory.
+All rights reserved.
+
+Contributor: Terry Turton
+
+*/
+/* 
+User-defined CSS files can be added under the Look & Feel tab.  
+Choose Advanced option and Add Custom CSS to open the CSS editor.
+
+The following specifications will need to be
+modified for the actual study images. In particular,
+the imagebox width, along with the various colors, may need to be changed 
+to fit your study needs.
+*/
+
+ .imageBox {
+     margin-left: auto;
+      margin-right: auto;
+      width: 750px; 	 /* Modify to be image width plus bit more as needed to fit all keys on one row */
+      position: relative;
+      margin: 1em;
+      border: 10px solid #848484;   /*Modify all instances if changing background color*/
+      overflow: hidden;
+	  background-color:  #848484;  /*Modify all instances if changing background color*/
+    }
+	
+  .nextButton {
+     background-color: burlywood;
+	 position: center;
+	 text-align: center;
+	 font-weight: bold;
+	 font-size: 130% ;
+	 width: 40%;
+	 margin: 10px 2px 2px 2px;
+	 outline-color: #FFFFFF;
+	 outline-style: solid;
+	 outline-width: 1px;
+    }	
+	
+	.keyButtons{
+	  float: left;
+	  clear: none;
+	  margin: 15px 5px 5px 5px;
+	  border-style: solid;
+	  border-width: 0px 0px 3px 0px;
+	  border-color: #848484;           /*Modify all instances if changing background color*/
+	  font-family: "Courier New", Courier, monospace;
+	}
+
+/*
+Copyright (c) 2017, University of Texas at Austin, Los Alamos National Laboratory.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
