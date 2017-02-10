@@ -9,6 +9,7 @@ There are currently four modules which can be used for different types of psycho
 3) Round Robin Comparison - compares all images pairwise; includes option for a set of validation images
 4) Compare 2 Arrays - compares images in two lists; can be used in a 2AFC type of experiment or to hardcode a subset of a round robin set of comparison. 
 5) Click Counting - counts the number of clicks on an image.  Can be used for counting types of studies.  
+6) Key Task - shows a stimuli image with an array of 16 answer keys.  The keys can be coded by name or by color.  
 
 Please see the EvaluationToolKitREADME for more details on using the ETK. The ETK-Checklist.docx file provides a useful checklist of steps needed to implement an ETK module.  
 
