@@ -8,38 +8,42 @@ All rights reserved.
 Contributor: Terry Turton
 
 */
-/* The 2 Alternative Forced Choice module is used to run a 2AFC 
-experiment against a single baseline image.  The baseline image must be
-the first in the list of Test images.  The baseline image will be shuffled 
-into the list of Test images so there will be a bseline vs. baseline comparison.
-
-The image arrays will need to be modified for the user specific images.  There
-are two arrays, one for the stimuli images and one for multiple baselines images.
-The stimuli image order will be randomized and each paired with a randomly chosen
-baseline image.  
+/* The 2 Alternative Forced Choice module is used to run a 2AFC experiment.  
+The module assumes that there is a set of baseline images and a set of stimuli images. Each stimuli image level may
+consist of multiple variants.  The baseline images are in a single array.  One baseline image will be randomly chosen 
+to be used in each comparison.  The stimuli images are an array of arrays where the first index is the stimuli level 
+and the second index goes over the level variants.  An array of single stimuli images, one for each level of the 
+stimuli, will be built from one randomly chosen variant image from each level.  
+The image arrays will need to be modified for the user specific images.  
 
 The prefixes and code for the Embedded Data can also be changed as needed 
 to fit the specific variable names defined by the user.  
 */
 
 
-// List of Test images.  Baseline is first image by default.
-// Baseline will be compared to itself and each of the Test images.
-var imgURL = "http://146.6.82.10/TestImages/";
-var baselineNames = [ 
+// List of Baseline and Stimuli images.  
+// One Stimuli image for each level will be chosen from each set of variants and that will be compared to 
+// one of the possible Baseline images. 
+// If a Baseline image should be compared to one of the Baseline images, then the set of 
+// Baseline images should be included as one of the possible sets of Stimuli images.  
+var imgURL = "http://000.0.00.00/TestImages/";
+var allBaselineNames = [ 
 "True00.png",
 "True01.png",
 "True02.png",
-"True03.png"
+"True03.png",
+"True04.png"
 ];
-var stmliNames = [
-"Image00.png",
-"Image01.png",
-"Image02.png",
-"Image03.png",
-"Image04.png"
+var allStimuliNames = [
+	["Image00_vb.png", "Image00_vg.png", "Image00_vr.png", "Image00_vy.png" ],
+	["Image01_vb.png", "Image01_vg.png", "Image01_vr.png", "Image01_vy.png" ],
+	["Image02_vb.png", "Image02_vg.png", "Image02_vr.png", "Image02_vy.png" ],
+	["Image03_vb.png", "Image03_vg.png", "Image03_vr.png", "Image03_vy.png" ],
+	["Image04_vb.png", "Image04_vg.png", "Image04_vr.png", "Image04_vy.png" ],
+	["True00.png", "True01.png", "True02.png", "True03.png", "True04.png"]
 ];
 
+var stmliNames = [], whichStmli;
 var bases = [], baseNames = [];
 var imgs = [], imgNames = [];
 var whichBase;
@@ -179,21 +183,26 @@ function findOrigIndex (arr, key, iSearchValue) {
 }
 
 // Start 2 Alternative Forced Choice
-
 that = this;
 that.hideNextButton();
 
-// Build the image and baseline arrays from the URL and names; preload images
-// Shuffle the images, choose a random baseline and compare the baseline to the image
+// Build an array from the stimuli images, choosing one stimuli image per level from each set of variants.
+// Feed those into the stmliNames[].
+for (var i = 0; i < allStimuliNames.length; i++) {
+	whichStmli = Math.floor(allStimuliNames[i].length*Math.random());
+	stmliNames[i] = allStimuliNames[i][whichStmli];
+}
+
+// Build the image arrays from the URL, baseNames and stmliNames array; preload images
+// Shuffle the images, choose a random baseline for each of the stimuli level images
 // creating an array of image pairs.
 for (var i=0; i<stmliNames.length; i++) {
 	imgs[i] = imgURL + stmliNames[i];
 	imgNames.push( {iIndex: i, sName: stmliNames[i], iName: imgs[i], iResult: -1} );
 }
-
-for (var i=0; i<baselineNames.length; i++) {
-	bases[i] = imgURL + baselineNames[i];
-	baseNames.push( {iIndex: i, bName: baselineNames, iName: bases[i], iResult: -1} );
+for (var i=0; i<allBaselineNames.length; i++) {
+	bases[i] = imgURL + allBaselineNames[i];
+	baseNames.push( {iIndex: i, bName: allBaselineNames, iName: bases[i], iResult: -1} );
 }
 preloadImages(imgs);
 preloadImages(bases);
@@ -233,7 +242,6 @@ nextBtn.addEventListener('click', function() {
 			nameEmbData = namePre + iLoop;
 			currentName = imgNames[origIndex].sName;
 			currentChoice = imgNames[origIndex].iResult;
-			console.log("unpacked:", iLoop, " ", origIndex, " ", currentName, " ", currentChoice);
 	        Qualtrics.SurveyEngine.setEmbeddedData(nameEmbData, currentName);		
 	        Qualtrics.SurveyEngine.setEmbeddedData(choiceEmbData, currentChoice);
 		}
