@@ -24,25 +24,28 @@ to fit the specific variable names defined by the user.
 // List of Baseline and Stimuli images.  
 // One Stimuli image for each level will be chosen from each set of variants and that will be compared to 
 // one of the possible Baseline images. 
-// If a Baseline image should be compared to one of the Baseline images, then the set of 
+// If a Baseline image should be compared to one of the Baseline images (typical 2AFC procedure), then the set of 
 // Baseline images should be included as one of the possible sets of Stimuli images.  
-var imgURL = "http://000.0.00.00/TestImages/";
+// The test images vary the value from V=0 (black) through varying shades of grey.  There are five variants for 
+// each value level (value**-00 through value**-04).
+
+var imgURL = "http://000.0.00.00/TestImages/ValueVarying/";
 var allBaselineNames = [ 
-"True00.png",
-"True01.png",
-"True02.png",
-"True03.png",
-"True04.png"
+"value00-00.png",
+"value00-01.png",
+"value00-02.png",
+"value00-03.png",
+"value00-04.png"
 ];
 var allStimuliNames = [
-	["Image00_vb.png", "Image00_vg.png", "Image00_vr.png", "Image00_vy.png" ],
-	["Image01_vb.png", "Image01_vg.png", "Image01_vr.png", "Image01_vy.png" ],
-	["Image02_vb.png", "Image02_vg.png", "Image02_vr.png", "Image02_vy.png" ],
-	["Image03_vb.png", "Image03_vg.png", "Image03_vr.png", "Image03_vy.png" ],
-	["Image04_vb.png", "Image04_vg.png", "Image04_vr.png", "Image04_vy.png" ],
-	["True00.png", "True01.png", "True02.png", "True03.png", "True04.png"]
+	["value00-00.png", "value00-01.png", "value00-02.png", "value00-03.png", "value00-04.png"],
+	["value05-00.png", "value05-01.png", "value05-02.png", "value05-03.png", "value05-04.png"],
+	["value10-00.png", "value10-01.png", "value10-02.png", "value10-03.png", "value10-04.png"],
+	["value15-00.png", "value15-01.png", "value15-02.png", "value15-03.png", "value15-04.png"],
+	["value25-00.png", "value25-01.png", "value25-02.png", "value25-03.png", "value25-04.png"],
+	["value35-00.png", "value35-01.png", "value35-02.png", "value35-03.png", "value35-04.png"],
+	["value45-00.png", "value45-01.png", "value45-02.png", "value45-03.png", "value45-04.png"],
 ];
-
 var stmliNames = [], whichStmli;
 var bases = [], baseNames = [];
 var imgs = [], imgNames = [];
