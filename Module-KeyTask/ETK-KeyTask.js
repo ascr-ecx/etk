@@ -20,11 +20,13 @@ to fit the specific variable names defined by the user.
 */
 var imgURL = "http://000.0.00.00/TestImages/"
 var baseNames = [ 
-"KeyTaskExample00.png",
-"KeyTaskExample01.png",
-"KeyTaskExample02.png",
-"KeyTaskExample03.png",
-"KeyTaskExample04.png"
+"KTimage00.png",
+"KTimage01.png",
+"KTimage02.png",
+"KTimage03.png",
+"KTimage04.png",
+"KTimage05.png",
+"KTimage06.png"
 ];
 var imgIndex; 
 var imgs = [];
