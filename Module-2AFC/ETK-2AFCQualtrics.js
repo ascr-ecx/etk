@@ -238,7 +238,7 @@ nextBtn.addEventListener('click', function() {
 	} else {
 		endStudy(imgContainer);
 // Write output to Embedded Data Variables in image order; 
-		Qualtrics.SurveyEngine.setEmbeddedData("AllOneSide", allLeft||allRight);
+		Qualtrics.SurveyEngine.setEmbeddedData(nameAllOneSide, allLeft||allRight);
 		for (var iLoop = 0; iLoop<stmliNames.length; iLoop++) {
 			origIndex = findOrigIndex(imgNames, "iIndex", iLoop);
 			choiceEmbData = choicePre + iLoop;
