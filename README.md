@@ -20,16 +20,16 @@ There are currently six modules which can be used for different types of psychop
 
 * **Key Task** This shows a stimuli image with an array of 16 answer keys.  The keys can be coded by name or by color.  
 
-# Documentation
+## Documentation
 
 The ETK-Checklist.docx file provides a useful checklist of steps needed to implement an ETK module.  
 
-# Acknowledgement 
+## Acknowledgement 
 
 This material is based upon work supported by **Dr. Lucy Nowell** of the **U.S. Department of Energy Office of Science, Advanced Scientific 
 Computing Research** under Award Numbers DE-AS52-06NA25396 and DE-SC-0012516. It is an artifact created for the ECX project (http://www.ecxproject.org)
 
-# License
+## License
 
 This code is licensed under a BSD 3-Clause License. Copyright (c) 2016, University of Texas at Austin, Los Alamos National Laboratory. All rights reserved. 
 
