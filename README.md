@@ -37,5 +37,7 @@ Computing Research** under Award Numbers DE-AS52-06NA25396 and DE-SC-0012516. It
 
 This code is licensed under a BSD 3-Clause License. Copyright (c) 2016, University of Texas at Austin, Los Alamos National Laboratory. All rights reserved. 
 
+The icon for this project was downloaded from The Noun Project (www.nounproject.comr), and was created by Delwar Hossain.
+
 
  
