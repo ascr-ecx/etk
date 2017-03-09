@@ -1,6 +1,6 @@
 # The Evaluation Toolkit (etk)
 
-![icon](https://github.com/ascr-ecx/etk/blob/master/img/icon.png =x100)
+<img src="https://github.com/ascr-ecx/etk/blob/master/img/icon.png" width="100"/>
 
 **Contact:** Terry Turton tlturton@cat.utexas.edu (primary developer)
 
