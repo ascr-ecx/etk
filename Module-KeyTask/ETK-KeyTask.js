@@ -80,6 +80,9 @@ var currentName = " ";
 var currentChoice;
 var that;
 
+// Create misc variables
+var timeDelay = 250;  // number of milliseconds pause before next image pair is shown
+
 function preloadImages(arr){
     var newimages=[]
 	//force arr parameter to always be an array
@@ -106,13 +109,18 @@ function shuffle(array) {  // Fisher-Yates Shuffle from stackoverflow
 }
 
 function show1Image(outContainer, inContainer, image, index, kFlag, kColors, kNames, kValues) { 
-	var img;
+	var img = document.createElement("img");
 	var docFrag = document.createDocumentFragment();
-	var docText = document.createTextNode("spacess");
+	var docText = document.createTextNode("spacess");  // create some empty space for filling; can be changed
 
 	inContainer.style.color = backgroundColor;
+	img.style.opacity = 0;
+	img.style.filter  = 'alpha(opacity=0)'; // IE fallback
+	
+	img.src = image;
+	
 	docFrag.appendChild(docText);
-	docFrag.appendChild(img=document.createElement('img')).src = image;
+	docFrag.appendChild(img);
 	inContainer.appendChild(docFrag);
 	inContainer.appendChild(document.createElement('br'))
 	generateKeys(kFlag, kColors, kNames, kValues, inContainer, index);	
@@ -120,6 +128,10 @@ function show1Image(outContainer, inContainer, image, index, kFlag, kColors, kNa
 	inContainer.appendChild(nextBtn);
 
 	outContainer.appendChild(inContainer);
+	setTimeout(function() {
+	img.style.opacity = 1.0;
+	img.style.filter  = 'alpha(opacity=100)'; // IE fallback
+	}, timeDelay);
 }
 
 var generateKeys = function(kFlag, kColors, kNames, kValues, container, index) {

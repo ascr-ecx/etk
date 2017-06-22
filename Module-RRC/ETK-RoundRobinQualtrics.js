@@ -20,7 +20,7 @@ to fit the specific variable names defined by the user.
 
 // List of Test images.  Baseline is first image by default.
 // Baseline will be compared to itself and each of the Test images.
-var imgURL = "http://146.6.82.10/TestImages/";
+var imgURL = "http://000.00.00.00/TestImages/";
 var baseNames = [ 
 "Image00",
 "Image01",
@@ -84,6 +84,9 @@ var allLeft = true;
 var allRight = true;
 var nameAllOneSide = "AllOneSide";
 
+// Create misc variables
+var timeDelay = 250;  // number of milliseconds pause before next image pair is shown
+
 function preloadImages(arr){ // preload imaegs
     var newimages=[]
 	//force arr parameter to always be an array
@@ -110,25 +113,33 @@ function shuffle(array) {  // Fisher-Yates Shuffle from stackoverflow
   return array;
 }
 
-function show2Images(outContainer, inContainer, imgA, imgB) {  
-	var img;
+function show2Images(outContainer, inContainer, imgA, imgB) { 
+// Add two images to the study container; randomly show the images
+// as A vs. B or B vs. A
+	var img1 = document.createElement("img");
+	var img2 = document.createElement("img");
 	var docFrag = document.createDocumentFragment();
 	var someSpace = document.createTextNode("xxxxx");
 	flipped = false;
 
 	inContainer.style.color = "#CCCCCC";
 	if (Math.random() < 0.5) {
-		docFrag.appendChild(someSpace);
-		docFrag.appendChild(img=document.createElement('img')).src = imgA;
-		docFrag.appendChild(someSpace);
-		docFrag.appendChild(img=document.createElement('img')).src = imgB;
-	} else {
+		img1.src = imgA;
+		img2.src = imgB;
+		} else {
 		flipped = true;
-		docFrag.appendChild(someSpace);
-		docFrag.appendChild(img=document.createElement('img')).src = imgB;
-		docFrag.appendChild(someSpace);
-	    docFrag.appendChild(img=document.createElement('img')).src = imgA;
+		img2.src = imgA;
+		img1.src = imgB;
 	}
+	img1.style.opacity = 0;
+	img2.style.opacity = 0;
+	img1.style.filter  = 'alpha(opacity=0)'; // IE fallback
+	img2.style.filter  = 'alpha(opacity=0)'; // IE fallback
+
+	docFrag.appendChild(someSpace);
+	docFrag.appendChild(img1);
+	docFrag.appendChild(someSpace);
+	docFrag.appendChild(img2);
 	inContainer.appendChild(docFrag);
 	inContainer.appendChild(document.createElement('br'));
 	inContainer.appendChild(leftBtn);
@@ -138,6 +149,13 @@ function show2Images(outContainer, inContainer, imgA, imgB) {
 	inContainer.appendChild(nextBtn);
 	
 	outContainer.appendChild(inContainer);
+	setTimeout(function() {
+	img1.style.opacity = 1.0;
+	img2.style.opacity = 1.0;
+	img1.style.filter  = 'alpha(opacity=100)'; // IE fallback
+	img2.style.filter  = 'alpha(opacity=100)'; // IE fallback
+	}, timeDelay);
+		
 	return flipped;
 }
 
