@@ -30,6 +30,18 @@ The ETKlab website (http://www.etklab.org) has examples and demo surveys, as wel
 
 The ETK-Checklist.docx file provides a useful checklist of steps needed to implement an ETK module.  
 
+Bibtex Citation:
+@inproceedings {Turton:eurovisshort.20171131,
+booktitle = {EuroVis 2017 - Short Papers},
+editor = {Barbora Kozlikova and Tobias Schreck and Thomas Wischgoll},
+title = {{ETK: An Evaluation Toolkit for Visualization User Studies}},
+author = {Turton, Terece L. and Berres, Anne S. and Rogers, David H. and Ahrens, James},
+year = {2017},
+publisher = {The Eurographics Association},
+ISBN = {978-3-03868-043-7},
+DOI = {10.2312/eurovisshort.20171131}
+}
+
 ## Acknowledgement 
 
 This material is based upon work supported by **Dr. Lucy Nowell** of the **U.S. Department of Energy Office of Science, Advanced Scientific 
