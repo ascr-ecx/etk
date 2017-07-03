@@ -57,6 +57,11 @@ var choiceName = "Count1";
 var currentImage = 0;
 var imgIndex = 0; 
 
+// Create misc variables
+var timeDelay = 250;  // number of milliseconds pause before next image is shown
+var doTimeDelay = false; // implement option to turn on/off time delay
+var doImageNumber = false; // implement option to turn on/off the image counter above the image
+
 function preloadImages(arr){
     var newimages=[]
 	//force arr parameter to always be an array
@@ -68,26 +73,38 @@ function preloadImages(arr){
 }
 
 function show1Image(outContainer, inContainer, image, imageNum) { 
-	var img;
+	var img = document.createElement("img");
 	var docFrag = document.createDocumentFragment();
 
-/* This section will add a title with the Image Number incrementing at the top
-of the carousel box.  Uncomment it if you wish to have the image number available	
-*/	
-//	var imageTextTitle = "IMAGE NUMBER: ";
-//	var titleDiv = document.createElement('DIV');
-//	var text = document.createTextNode(imageTextTitle + imageNum);
-//	titleDiv.className = "imageTitle";
-//	titleDiv.appendChild(text);
-//	inContainer.appendChild(titleDiv); 
+	if (doImageNumber) {  // flag to show an image number at the top of the image
+		var imageTextTitle = "IMAGE NUMBER: ";
+		var titleDiv = document.createElement('DIV');
+		var text = document.createTextNode(imageTextTitle + imageNum);
+		titleDiv.className = "imageTitle";
+		titleDiv.appendChild(text);
+		inContainer.appendChild(titleDiv); 
+	}
 
-	docFrag.appendChild(img=document.createElement('img')).src = image;
+	img.src = image;
+	if (doTimeDelay) {  // flag to put a delay between the images
+		img.style.opacity = 0.0;
+		img.style.filter  = 'alpha(opacity=0)'; // IE fallback
+}	else {
+		img.style.opacity = 1.0;
+		img.style.filter  = 'alpha(opacity=100)'; // IE fallback
+	}
+	
+	docFrag.appendChild(img);
 	inContainer.appendChild(docFrag);
 	inContainer.appendChild(document.createElement('br'));
 	inContainer.appendChild(prevBtn);
 	inContainer.appendChild(nextBtn);
 	
 	outContainer.appendChild(inContainer);
+	setTimeout(function() {
+	img.style.opacity = 1.0;
+	img.style.filter  = 'alpha(opacity=100)'; // IE fallback
+	}, timeDelay);
 }
 
 function clearContainer(elementID) {

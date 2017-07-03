@@ -24,7 +24,7 @@ to fit your study needs.
       margin: 1em;
       border: 1px solid #ccc;
       overflow: hidden;
-	  background-color:  #CC5500;
+	  background-color:  #808080;  /* HTML gray */
     }
 	
   .cycleButton {
@@ -38,7 +38,7 @@ to fit your study needs.
   }
 
   .imageTitle {
-	 background-color: burlywood; 
+	 background-color:  #808080;  /* HTML gray */
 	 text-align: center;
 	 font-weight: bold;
 	padding-top: 5px;
