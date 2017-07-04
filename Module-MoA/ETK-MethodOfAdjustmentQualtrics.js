@@ -23,15 +23,19 @@ Place this code in the embedded JavaScript location for each Method of Adjustmen
 question.
 */
 	
-// Edit the image list as needed.
-var imgURL = "http://000.0.00.00/TestImages/";
-var baseNames = [ 
-"Image00",
-"Image01",
-"Image02",
-"Image03",
-"Image04"
+// Edit the image list and URL as needed.
+// Each stimuli level will chosen from multiple possible variants for that level.
+var imgURL = "http://000.0.00.00/TestImages/ValueVarying/"
+var allBaseNames = [ 
+	["value00-00.png", "value00-01.png", "value00-02.png", "value00-03.png", "value00-04.png"],
+	["value01-00.png", "value01-01.png", "value01-02.png", "value01-03.png", "value01-04.png"],
+	["value03-00.png", "value03-01.png", "value03-02.png", "value03-03.png", "value03-04.png"],
+	["value05-00.png", "value05-01.png", "value05-02.png", "value05-03.png", "value05-04.png"],
+	["value10-00.png", "value10-01.png", "value10-02.png", "value10-03.png", "value10-04.png"],
+	["value15-00.png", "value15-01.png", "value15-02.png", "value15-03.png", "value15-04.png"],
+	["value25-00.png", "value25-01.png", "value25-02.png", "value25-03.png", "value25-04.png"]
 ];
+var baseNames = [];
 var imgs = [];
 
 // Create containers, attach global container to Qualtrics Question Container
@@ -114,6 +118,12 @@ function clearContainer(elementID) {
 
 // Begin Method of Adjustment 
 
+// Build an array from the stimuli images, choosing one stimuli image per level from each set of variants.
+// Feed those into the baseNames[].
+for (var i = 0; i < allBaseNames.length; i++) {
+	whichStmli = Math.floor(allBaseNames[i].length*Math.random());
+	baseNames[i] = allBaseNames[i][whichStmli];
+}
 // Create image array from URL and list of image names; 
 // Preload images to avoid flickering onload
 for (i=0; i<baseNames.length; i++) {
