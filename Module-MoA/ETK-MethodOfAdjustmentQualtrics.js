@@ -58,7 +58,6 @@ nextBtn.appendChild(nextTxt);
 prevBtn.appendChild(prevTxt);
 
 var choiceName = "Count1";
-var currentImage = 0;
 var imgIndex = 0; 
 
 // Create misc variables
@@ -137,20 +136,25 @@ show1Image(glbContainer, imgContainer, imgs[0], 0 );
 // Click "Next" button to see next image
 nextBtn.addEventListener('click', function() {
 	clearContainer(imgContainer);
+	nextBtn.style.backgroundColor = "burlywood";
+	prevBtn.style.backgroundColor = "burlywood";
 	imgIndex++;
 	if (imgIndex == imgs.length) {
-	imgIndex = 0;
+		nextBtn.style.backgroundColor = "darkred";  //At end, go other direction
+	imgIndex--;
 	}
 	show1Image(glbContainer, imgContainer, imgs[imgIndex], imgIndex);
 	Qualtrics.SurveyEngine.setEmbeddedData(choiceName,imgIndex);
 });
 
-// Click "Prev" button to see previous image
 prevBtn.addEventListener('click', function() {
 	clearContainer(imgContainer);
+	nextBtn.style.backgroundColor = "burlywood";
+	prevBtn.style.backgroundColor = "burlywood";
 	imgIndex--;
 	if (imgIndex == -1) {
-	imgIndex = imgs.length - 1;
+		prevBtn.style.backgroundColor = "darkred";  // At end, go other direction
+	imgIndex++;
 	} 
 	show1Image(glbContainer, imgContainer, imgs[imgIndex], imgIndex);
 	Qualtrics.SurveyEngine.setEmbeddedData(choiceName,imgIndex);
