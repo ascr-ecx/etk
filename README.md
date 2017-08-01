@@ -14,7 +14,9 @@ There are currently six modules which can be used for different types of psychop
 
 * **Two-alternative Forced Choice** This compares a set of stimuli levels to a baseline; both the baseline and the stimuli images can come from an array of possible variants; each image in the comparison pair (baseline versus a stimuli level) will be randomly chosen from the respective set of variants.
 
-* **Method of Adjustment** This cycles through a "carousel" of images.
+* **Method of Adjustment** This cycles through a "carousel" of images.  The user can choose a threshold point.  
+
+* **Sliding Method of Adjustment** This MoA variant shows two images as it rotates through the carousel of images, making it easier to see a threshold point.  
 
 * **Round Robin Comparison** This compares all images pairwise; includes option for a set of validation images.
 
