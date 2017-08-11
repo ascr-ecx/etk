@@ -20,7 +20,7 @@ to fit the specific variable names defined by the user.
 
 // List of Test images.  Baseline is first image by default.
 // Baseline will be compared to itself and each of the Test images.
-var imgURL = "http://000.00.00.00/TestImages/";
+var imgURL = "http://000.0.00.00/TestImages/";
 var baseNames = [ 
 "Image00",
 "Image01",
@@ -86,6 +86,7 @@ var nameAllOneSide = "AllOneSide";
 
 // Create misc variables
 var timeDelay = 250;  // number of milliseconds pause before next image pair is shown
+var doTimeDelay = false; // implement option to turn on/off time delay
 
 function preloadImages(arr){ // preload imaegs
     var newimages=[]
@@ -131,11 +132,18 @@ function show2Images(outContainer, inContainer, imgA, imgB) {
 		img2.src = imgA;
 		img1.src = imgB;
 	}
-	img1.style.opacity = 0;
-	img2.style.opacity = 0;
-	img1.style.filter  = 'alpha(opacity=0)'; // IE fallback
-	img2.style.filter  = 'alpha(opacity=0)'; // IE fallback
-
+	if (doTimeDelay) {  // flag to put a delay between the images
+		img1.style.opacity = 0.0;
+		img2.style.opacity = 0.0;
+		img1.style.filter  = 'alpha(opacity=0)'; // IE fallback
+		img2.style.filter  = 'alpha(opacity=0)'; // IE fallback
+}	else {
+		img1.style.opacity = 1.0;
+		img2.style.opacity = 1.0;
+		img1.style.filter  = 'alpha(opacity=100)'; // IE fallback
+		img2.style.filter  = 'alpha(opacity=100)'; // IE fallback
+	}
+	
 	docFrag.appendChild(someSpace);
 	docFrag.appendChild(img1);
 	docFrag.appendChild(someSpace);

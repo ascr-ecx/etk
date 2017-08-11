@@ -78,32 +78,6 @@ function preloadImages(arr){
     }
 }
 
-function show1Image(outContainer, inContainer, image, imageNum) { 
-	var img = document.createElement("img");
-	var docFrag = document.createDocumentFragment();
-
-	img.src = image;
-	if (doTimeDelay) {  // flag to put a delay between the images
-		img.style.opacity = 0.0;
-		img.style.filter  = 'alpha(opacity=0)'; // IE fallback
-}	else {
-		img.style.opacity = 1.0;
-		img.style.filter  = 'alpha(opacity=100)'; // IE fallback
-	}
-	
-	docFrag.appendChild(img);
-	inContainer.appendChild(docFrag);
-	inContainer.appendChild(document.createElement('br'));
-	inContainer.appendChild(prevBtn);
-	inContainer.appendChild(nextBtn);
-	
-	outContainer.appendChild(inContainer);
-	setTimeout(function() {
-	img.style.opacity = 1.0;
-	img.style.filter  = 'alpha(opacity=100)'; // IE fallback
-	}, timeDelay);
-}
-
 function show2Images(outContainer, inContainer, imgA, imgB) { 
 // Add two images to the study container; randomly show the images
 // as A vs. B or B vs. A
