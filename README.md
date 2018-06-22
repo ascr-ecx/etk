@@ -2,7 +2,7 @@
 
 <img src="https://github.com/ascr-ecx/etk/blob/master/img/icon.png" width="50"/>
 
-**Contact:** Terry Turton tlturton@cat.utexas.edu (primary developer)
+**Contact:** Terry Turton tlturton@lanl.gov (primary developer)
 
 **Website:** http://www.etklab.org
 
