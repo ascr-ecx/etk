@@ -1,0 +1,12 @@
+/* Place your CSS here */
+container{ 
+    width:100%; height:100%; 
+    position:relative;}
+canvas {
+    border: 1px solid #000;
+	
+}
+imageObj{ 
+    width:100%; height:100%; 
+    position:absolute; top:0px; left:0px;
+}
