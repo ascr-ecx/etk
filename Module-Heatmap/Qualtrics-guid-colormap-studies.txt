@@ -1,0 +1,16 @@
+Preprocessing data procedure:
+
+1.	Upload images to Qualtrics graphics library in the designated folders
+2.	Go to account settings→Qualtrics IDs→libraries: My Library: Ayat Mohammed
+3.	Navigate until you find your folder name then select starting with folder name until you select all images and their ids
+4.	Copy and past in excel sheet, delete any header and any unwanted  data
+5.	Save as windows csv format
+6.	In the python file “File-names_list.py” feed in the .csv file name and run the code to get a list of images names 
+7.	Insert this list in Qualtrics question’ javascript code for “var baseNames ” 
+	
+Post-processing data procedure:
+
+1.	Copy images names from the graphic library fro Qualtrics and save them as two columns one for the ID and one for the original name then save as csv file.
+2.	Export a csv file of responses from Qualtrics. Clean the file from the metadata, demographics, timing, and the “ImgInd” and “AMT number” columns. So there will be a csv file with the responses starting with the training response.
+3.	The columns named “n0, n1, ... nn” should be cleaned, so this pattern “https://utexas.ca1.qualtrics.com/ControlPanel/Graphic.php?IM= “ should be deleted from all images names in this file using the find and replace tool in MS Excel.
+4.	Use the two files as input for the python script “response-cleaning”
