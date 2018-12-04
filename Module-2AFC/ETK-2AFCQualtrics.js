@@ -54,7 +54,7 @@ var whichBase;
 // Create containers, attach global container to Qualtrics Question Container
 var imgContainer = document.getElementById('imageContainer');
 var glbContainer =  this.getQuestionContainer();
-var quesText = document.getElementById('myQuesText')
+var quesText = document.getElementById('myQuesText');
 imgContainer.className = "pairBox";
 
 // Create buttons with needed attributes and text
