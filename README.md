@@ -44,6 +44,15 @@ ISBN = {978-3-03868-043-7},
 DOI = {10.2312/eurovisshort.20171131}
 }
 
+## Qualtric Image Server Tip
+
+When using image URLs for images residing in your Qualtrics Graphics Library (rather than on a separate server), you may need to modify the URL so it can be accessed by people taking the study.
+
+Replace:
+/Q/GraphicsSectionGraphic.php
+with
+/ControlPanel/Graphic.php
+
 ## Acknowledgement 
 
 This material is based upon work supported by **Dr. Lucy Nowell** of the **U.S. Department of Energy Office of Science, Advanced Scientific 
