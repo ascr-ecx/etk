@@ -4,7 +4,7 @@
 
 **Contact:** Terry Turton tlturton@lanl.gov (primary developer)
 
-**Website:** http://www.etklab.org
+**Documentation:** Please see the project Wiki.
 
 The Evalution ToolKit is designed to automate image-based perceptual experiments.  Developed under a DOE grant by the ECX Collaboration, this software is targeted at researchers in scientific visualization. 
 
@@ -28,9 +28,11 @@ There are currently six modules which can be used for different types of psychop
 
 ## Documentation
 
-The ETKlab website (http://www.etklab.org) has examples and demo surveys, as well as papers and other material in support of this toolkit. Take a look!
+The etk Wiki has examples and demo surveys. Take a look!
 
-The ETK-Checklist.docx file provides a useful checklist of steps needed to implement an ETK module.  
+## Citation
+
+If using an etk module in your work, please cite the following paper as reference:
 
 Bibtex Citation:
 @inproceedings {Turton:eurovisshort.20171131,
@@ -44,15 +46,6 @@ ISBN = {978-3-03868-043-7},
 DOI = {10.2312/eurovisshort.20171131}
 }
 
-## Qualtric Image Server Tip
-
-When using image URLs for images residing in your Qualtrics Graphics Library (rather than on a separate server), you may need to modify the URL so it can be accessed by people taking the study.
-
-Replace:
-/Q/GraphicsSectionGraphic.php
-with
-/ControlPanel/Graphic.php
-
 ## Acknowledgement 
 
 This material is based upon work supported by **Dr. Lucy Nowell** of the **U.S. Department of Energy Office of Science, Advanced Scientific 
@@ -65,4 +58,5 @@ This code is licensed under a BSD 3-Clause License. Copyright (c) 2016, Universi
 The icon for this project was downloaded from The Noun Project (www.nounproject.comr), and was created by Delwar Hossain.
 
 
- 
+ ### Disclaimer
+ This project is no longer under active development.  Links may have become obsolete.
